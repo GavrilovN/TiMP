@@ -1,0 +1,75 @@
+#include "stdafx.h"
+#include <iostream>
+using namespace std;
+class MyTree {
+private:
+	int* info;
+	int x;
+public:
+	MyTree(int* root, int index) : info(root), x(index) {};
+	void preorder(int num) const;//прямой
+	void postorder(int num) const;//обратный
+	void inorder(int num) const;//симметричный
+};
+
+void MyTree::preorder(int num) const {
+	for (int i = 0; i < this->x; i++) {
+		if (this->info[i] == num) {
+			cout << i << ' ';
+			preorder(i);
+		}
+	}
+}
+
+
+void MyTree::postorder(int num) const {
+	for (int i = 0; i < this->x; i++) {
+		if (this->info[i] == num) {
+			postorder(i);
+		}
+	}
+	if (num != -1) {
+		cout << num << ' ';
+	}
+}
+
+
+void MyTree::inorder(int num) const {
+	int x = 0;
+	for (int i = 0; i < this->x; i++) {
+		if (this->info[i] == num) {
+			inorder(i);
+			if ((!x) && (num != -1)) {
+				cout << num << ' ';
+			}
+			x++;
+		}
+	}
+	if (x == 0) {
+		cout << num << ' ';
+	}
+}
+
+int main() {
+	int n;
+	cin >> n;
+	int* tree = new int[n];
+	for (int i = 0; i < n; i++) {
+		cin >> tree[i];
+	}
+
+	MyTree t(tree, n);
+
+	t.preorder(-1);
+	cout << endl;
+
+	t.postorder(-1);
+	cout << endl;
+
+	t.inorder(-1);
+	cout << endl;
+
+	delete[] tree;
+	system("pause");
+	return 0;
+}
